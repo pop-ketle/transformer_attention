@@ -1,9 +1,9 @@
 import tensorflow as tf
 
 class FeedForwardNetwork(tf.keras.models.Model):
-    '''TransformerようのPosition-wise Feed forward Neural Network
+    '''Transformer用のPosition-wise Feed forward Neural Network
     '''
-    def __init__(self, hidden_dim: int, dropout_rate: float, *args, **kwargs):
+    def __init__(self, hidden_dim, dropout_rate, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.hidden_dim   = hidden_dim
         self.dropout_rate = dropout_rate
@@ -13,10 +13,13 @@ class FeedForwardNetwork(tf.keras.models.Model):
         self.output_dense_layer = tf.keras.layers.Dense(hidden_dim, use_bias=True, name='output_layer')
         self.dropout_layer = tf.keras.Dropout(dropout_rate)
 
-    def call(self, input: tf.Tensor, training: bool):
+    def call(self, input, training):
         '''FeedForwardNetworkを適用
+
         Args:
-            input: shape = [batch_size, lengthm hidden_dim]
+            input (tf.Tensor): shape = [batch_size, lengthm hidden_dim]
+            training (bool):
+
         Returns:
             shape = [batch_size, length, hidden_dim]
         '''
@@ -26,11 +29,12 @@ class FeedForwardNetwork(tf.keras.models.Model):
 
 class ResidualNormalizationWrapper(tf.keras.models.Model):
     '''与えられたレイヤー(もしくはモデル)に対して、下記のノーマライゼーションを行う
-    - Layer Normalization
+
+    - Layer Normalization  
     - Dropout
     - Residual Connection
     '''
-    def __init__(self, layer: tf.keras.layers.Layer, dropout_rate: float, *args, **kwargs):
+    def __init__(self, layer, dropout_rate, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.layer = layer
         self.layer_normalization = LayerNormalization()
@@ -43,9 +47,11 @@ class ResidualNormalizationWrapper(tf.keras.models.Model):
         return input + tensor
 
 class LayerNormalization(tf.keras.layers.Layer):
-    '''レイヤーノーマライゼーション、レイヤーの出力が平均bias、標準偏差scaleになるように調整する
+    '''レイヤーノーマライゼーション
+    
+    レイヤーの出力が平均bias、標準偏差scaleになるように調整する
     '''
-    def build(self, input_shape: tf.TensorShape):
+    def build(self, input_shape):
         hidden_dim = input_shape[-1]
         self.scale = self.add_weight('layer_norm_scale', shape=[hidden_dim],
                                     initializer=tf.ones_initializer())
@@ -53,7 +59,7 @@ class LayerNormalization(tf.keras.layers.Layer):
                                     initializer=tf.zeros_initializer())
         super().build(input_shape)
 
-    def call(self, x: tf.Tensor, epsilon: float=1e-6):
+    def call(self, x, epsilon: float=1e-6):
         mean = tf.reduce_mean(x, axis=[-1], keepdims=True)
         variance = tf.reduce_meana(tf.square(x - mean), axis=[-1], keepdims=True)
         norm_x = (x - mean) * tf.rsqrt(variance + epsilon)
