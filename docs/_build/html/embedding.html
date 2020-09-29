@@ -155,10 +155,71 @@
   <div class="section" id="module-embedding">
 <span id="embedding-module"></span><h1><span class="section-number">3. </span>embedding module<a class="headerlink" href="#module-embedding" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="py class">
+<dt id="embedding.AddPositionalEncoding">
+<em class="property">class </em><code class="sig-prename descclassname">embedding.</code><code class="sig-name descname">AddPositionalEncoding</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#embedding.AddPositionalEncoding" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.base_layer.Layer</span></code></p>
+<p>入力テンソルに対し、位置情報を付与して返すレイヤー</p>
+<p>see: <a class="reference external" href="https://arxiv.org/pdf/1706.03762.pdf">https://arxiv.org/pdf/1706.03762.pdf</a>
+PE_{pos, 2i}   = sin(pos / 10000^{2i / d_model})
+PE_{pos, 2i+1} = cos(pos / 10000^{2i / d_model})</p>
+<dl class="py method">
+<dt id="embedding.AddPositionalEncoding.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">inputs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#embedding.AddPositionalEncoding.call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>This is where the layer's logic lives.</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> -- Input tensor, or list/tuple of input tensors.</p></li>
+<li><p><strong>**kwargs</strong> -- Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>A tensor or list/tuple of tensors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="embedding.TokenEmbedding">
 <em class="property">class </em><code class="sig-prename descclassname">embedding.</code><code class="sig-name descname">TokenEmbedding</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vocab_size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">embedding_dim</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">tf.float32</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#embedding.TokenEmbedding" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.base_layer.Layer</span></code></p>
 <p>トークン列をEmbedded Vector列に変換する</p>
+<dl class="py method">
+<dt id="embedding.TokenEmbedding.build">
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_shape</span></em><span class="sig-paren">)</span><a class="headerlink" href="#embedding.TokenEmbedding.build" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Creates the variables of the layer (optional, for subclass implementers).</p>
+<p>This is a method that implementers of subclasses of <cite>Layer</cite> or <cite>Model</cite>
+can override if they need a state-creation step in-between
+layer instantiation and layer call.</p>
+<p>This is typically used to create the weights of <cite>Layer</cite> subclasses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>input_shape</strong> -- Instance of <cite>TensorShape</cite>, or list of instances of
+<cite>TensorShape</cite> if the layer expects a list of inputs
+(one instance per input).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="embedding.TokenEmbedding.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="headerlink" href="#embedding.TokenEmbedding.call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>This is where the layer's logic lives.</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> -- Input tensor, or list/tuple of input tensors.</p></li>
+<li><p><strong>**kwargs</strong> -- Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>A tensor or list/tuple of tensors.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
