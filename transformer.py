@@ -1,9 +1,9 @@
 import tensorflow as tf
 from typing import List
-from .common_layer import FeedForwardNetwork, ResidualNormalizationWrapper, LayerNormalization
-from .embedding import TokenEmbedding, AddPositionalEncoding
-from .attention import MultiheadAttention, SelfAttention
-from .metrics import padded_cross_entropy_loss, padded_accuracy
+from common_layer import FeedForwardNetwork, ResidualNormalizationWrapper, LayerNormalization
+from embedding import TokenEmbedding, AddPositionalEncoding
+from attention import MultiheadAttention, SelfAttention
+from metrics import padded_cross_entropy_loss, padded_accuracy
 
 PAD_ID = 0
 
@@ -42,7 +42,7 @@ class Transformer(tf.keras.models.Model):
         with tf.name_scope(name):
             self.is_training = tf.placeholder(dtype=tf.bool, name='is_training')
             # [batch_sizem max_length]
-            self.encoder_input = tf.placeholder(dtype=tf.int32, shape[None, None], name='encoder_input')
+            self.encoder_input = tf.placeholder(dtype=tf.int32, shape=[None, None], name='encoder_input')
             # [batch_size]
             self.decoder_input = tf.placeholder(dtype=tf.int32, shape=[None, None], name='decoder_input')
 
@@ -102,7 +102,7 @@ class Transformer(tf.keras.models.Model):
 
             return tf.logical_or(pad_array, autoregression_array)
 
-class Encoder(tf.kears.model.Model):
+class Encoder(tf.keras.models.Model):
     '''トークン列をベクトル列にエンコードするEncoder
     '''
     def __init__(self, vocab_size, hopping_num, head_num, hidden_dim, dropout_rate, max_length, *args, **kwargs):
@@ -157,9 +157,9 @@ class Decoder(tf.keras.models.Model):
         self.hopping_num  = hopping_num
         self.head_num     = head_num
         self.hidden_dim   = hidden_dim
-        self.dropout_rate = dropo
+        self.dropout_rate = dropout_rate
         
-        self.token_embedding        = TokenEmbedding(vocav_size, hidden_dim)
+        self.token_embedding        = TokenEmbedding(vocab_size, hidden_dim)
         self.add_position_embedding = AddPositionalEncoding()
         self.input_dropout_layer    = tf.keras.layers.Dropout(dropout_rate)
 
@@ -168,10 +168,10 @@ class Decoder(tf.keras.models.Model):
             self_attention_layer    = SelfAttention(hidden_dim, head_num, dropout_rate, name='self_attention')
             enc_dec_attention_layer = MultiheadAttention(hidden_dim, head_num, dropout_rate, name='enc_dec_attention')
             ffn_layer               = FeedForwardNetwork(hidden_dim, dropout_rate, name='ffn')
-            self.attention_block_list.appedn([
-                ResidualNormalizationWrapper(self_attention_layer, dropout_rate, name='self_attention_wrapper')
-                ResidualNormalizationWrapper(enc_dec_attention_layer, dropout_rate, name='enc_dec_attention_wrapper')
-                ResidualNormalizationWrapper(ffn_layer, dropout_rate, nama='ffn_wrapper')
+            self.attention_block_list.append([
+                ResidualNormalizationWrapper(self_attention_layer, dropout_rate, name='self_attention_wrapper'),
+                ResidualNormalizationWrapper(enc_dec_attention_layer, dropout_rate, name='enc_dec_attention_wrapper'),
+                ResidualNormalizationWrapper(ffn_layer, dropout_rate, nama='ffn_wrapper'),
             ])
         self.output_normalization = LayerNormalization()
         # 注：本家ではここは TokenEmbedding の重みを転地したものを使っている
