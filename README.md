@@ -17,3 +17,9 @@
 - TokenEmbedding
 - AddPositionalEncoding  
 を実装
+
+# transformer.py
+- Transformer model
+- Encoder model
+- Decoder model  
+を実装
