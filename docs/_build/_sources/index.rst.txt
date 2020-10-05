@@ -15,7 +15,6 @@ Documentation of Attention Architecture!
    common_layer
    embedding
    transformer
-   metrics
 
 
 

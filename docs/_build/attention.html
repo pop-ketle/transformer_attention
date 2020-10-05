@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. attention module &mdash; transformer_attention 1.0.0 ドキュメント</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="2. common_layer module" href="common_layer.html" />
+    <link rel="prev" title="Documentation of Attention Architecture!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> transformer_attention
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OverView:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. attention module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common_layer.html">2. common_layer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embedding.html">3. embedding module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformer.html">4. transformer module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">transformer_attention</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><span class="section-number">1. </span>attention module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/attention.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-attention">
+<span id="attention-module"></span><h1><span class="section-number">1. </span>attention module<a class="headerlink" href="#module-attention" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="py class">
+<dt id="attention.MultiheadAttention">
+<em class="property">class </em><code class="sig-prename descclassname">attention.</code><code class="sig-name descname">MultiheadAttention</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hidden_dim</span></em>, <em class="sig-param"><span class="n">head_num</span></em>, <em class="sig-param"><span class="n">dropout_rate</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#attention.MultiheadAttention" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.training.Model</span></code></p>
+<p>Multi-head Attentionのモデル</p>
+<dl class="simple">
+<dt>model = MultiheadAttention(</dt><dd><p>hidden_dim = 512,
+head_num = 8,
+dropout_rate = 0.1,</p>
+</dd>
+</dl>
+<p>)
+model(query, memory, mask, training=True)</p>
+<dl class="py method">
+<dt id="attention.MultiheadAttention.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">memory</span></em>, <em class="sig-param"><span class="n">attention_mask</span></em>, <em class="sig-param"><span class="n">training</span></em><span class="sig-paren">)</span><a class="headerlink" href="#attention.MultiheadAttention.call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>モデルの実装</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>tf.Tensor</em>) -- queryのテンソル</p></li>
+<li><p><strong>memory</strong> (<em>tf.Tensor</em>) -- queryに情報を与えるmemoryのテンソル</p></li>
+<li><p><strong>attention_mask</strong> (<em>tf.Tensor</em>) -- attention weightに適用されるmask
+shape = [batch_size, 1, q_length, k_length]
+pad等無視する部分がTrueとなるようなものを指定してください</p></li>
+<li><p><strong>training</strong> (<em>bool</em>) -- 学習直推論直のフラグ</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="attention.SelfAttention">
+<em class="property">class </em><code class="sig-prename descclassname">attention.</code><code class="sig-name descname">SelfAttention</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hidden_dim</span></em>, <em class="sig-param"><span class="n">head_num</span></em>, <em class="sig-param"><span class="n">dropout_rate</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#attention.SelfAttention" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#attention.MultiheadAttention" title="attention.MultiheadAttention"><code class="xref py py-class docutils literal notranslate"><span class="pre">attention.MultiheadAttention</span></code></a></p>
+<p>Multi-head Attention による自己注意です。</p>
+<dl class="py method">
+<dt id="attention.SelfAttention.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">attention_mask</span></em>, <em class="sig-param"><span class="n">training</span></em><span class="sig-paren">)</span><a class="headerlink" href="#attention.SelfAttention.call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>モデルの実装</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>tf.Tensor</em>) -- queryのテンソル</p></li>
+<li><p><strong>memory</strong> (<em>tf.Tensor</em>) -- queryに情報を与えるmemoryのテンソル</p></li>
+<li><p><strong>attention_mask</strong> (<em>tf.Tensor</em>) -- attention weightに適用されるmask
+shape = [batch_size, 1, q_length, k_length]
+pad等無視する部分がTrueとなるようなものを指定してください</p></li>
+<li><p><strong>training</strong> (<em>bool</em>) -- 学習直推論直のフラグ</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="attention.SinmpleAttention">
+<em class="property">class </em><code class="sig-prename descclassname">attention.</code><code class="sig-name descname">SinmpleAttention</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">depth</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#attention.SinmpleAttention" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.training.Model</span></code></p>
+<p>Attentionの説明をするための、Multi-headではない単純なAttention</p>
+<dl class="py method">
+<dt id="attention.SinmpleAttention.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">memory</span></em><span class="sig-paren">)</span><a class="headerlink" href="#attention.SinmpleAttention.call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>モデルの実行を行う</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>tf.Tensor</em>) -- queryのテンソル</p></li>
+<li><p><strong>memory</strong> (<em>tf.Tensor</em>) -- queryに情報を与えるmemoryのテンソル</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="common_layer.html" class="btn btn-neutral float-right" title="2. common_layer module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Documentation of Attention Architecture!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; 著作権 2020, pop-ketle
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -78,6 +78,8 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html#document-attention">1. attention module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="index.html#document-common_layer">2. common_layer module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="index.html#document-embedding">3. embedding module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-transformer">4. transformer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-metrics">5. metrics module</a></li>
 </ul>
 </div>
             
@@ -371,7 +373,7 @@ PE_{pos, 2i+1} = cos(pos / 10000^{2i / d_model})</p>
 
 <dl class="py class">
 <dt id="embedding.TokenEmbedding">
-<em class="property">class </em><code class="sig-prename descclassname">embedding.</code><code class="sig-name descname">TokenEmbedding</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vocab_size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">embedding_dim</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">tf.float32</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#embedding.TokenEmbedding" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">embedding.</code><code class="sig-name descname">TokenEmbedding</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vocab_size</span></em>, <em class="sig-param"><span class="n">embedding_dim</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">tf.float32</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#embedding.TokenEmbedding" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.base_layer.Layer</span></code></p>
 <p>トークン列をEmbedded Vector列に変換する</p>
 <dl class="py method">
@@ -408,6 +410,128 @@ layer instantiation and layer call.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+</div>
+<span id="document-transformer"></span><div class="section" id="module-transformer">
+<span id="transformer-module"></span><h2><span class="section-number">4. </span>transformer module<a class="headerlink" href="#module-transformer" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="py class">
+<dt id="transformer.Decoder">
+<em class="property">class </em><code class="sig-prename descclassname">transformer.</code><code class="sig-name descname">Decoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vocab_size</span></em>, <em class="sig-param"><span class="n">hopping_num</span></em>, <em class="sig-param"><span class="n">head_num</span></em>, <em class="sig-param"><span class="n">hidden_dim</span></em>, <em class="sig-param"><span class="n">dropout_rate</span></em>, <em class="sig-param"><span class="n">max_length</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#transformer.Decoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.training.Model</span></code></p>
+<p>エンコードされたベクトル列からトークン列を生成するDecoder</p>
+<dl class="py method">
+<dt id="transformer.Decoder.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">encoder_output</span></em>, <em class="sig-param"><span class="n">self_attention_mask</span></em>, <em class="sig-param"><span class="n">enc_dec_attention_mask</span></em>, <em class="sig-param"><span class="n">training</span></em><span class="sig-paren">)</span><a class="headerlink" href="#transformer.Decoder.call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>モデルを実行</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>tf.Tensor</em>) -- shape = [batch_size, length]</p></li>
+<li><p><strong>training</strong> (<em>bool</em>) -- 学習時はTrue</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>shape = [batch_sizem length, hidden_dim]</p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p>(tf.Tensor)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="transformer.Encoder">
+<em class="property">class </em><code class="sig-prename descclassname">transformer.</code><code class="sig-name descname">Encoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vocab_size</span></em>, <em class="sig-param"><span class="n">hopping_num</span></em>, <em class="sig-param"><span class="n">head_num</span></em>, <em class="sig-param"><span class="n">hidden_dim</span></em>, <em class="sig-param"><span class="n">dropout_rate</span></em>, <em class="sig-param"><span class="n">max_length</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#transformer.Encoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.training.Model</span></code></p>
+<p>トークン列をベクトル列にエンコードするEncoder</p>
+<dl class="py method">
+<dt id="transformer.Encoder.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">self_attention_mask</span></em>, <em class="sig-param"><span class="n">training</span></em><span class="sig-paren">)</span><a class="headerlink" href="#transformer.Encoder.call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>モデルを実行</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>tf.Tensor</em>) -- shape = [batch_size, length]</p></li>
+<li><p><strong>training</strong> (<em>tf.Tensor</em>) -- 学習時はTrue</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>shape = [batch_size, length, hidden_dim]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="transformer.Transformer">
+<em class="property">class </em><code class="sig-prename descclassname">transformer.</code><code class="sig-name descname">Transformer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vocab_size</span></em>, <em class="sig-param"><span class="n">hopping_num</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">head_num</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">hidden_dim</span><span class="o">=</span><span class="default_value">512</span></em>, <em class="sig-param"><span class="n">dropout_rate</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">max_length</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#transformer.Transformer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.training.Model</span></code></p>
+<p>Transforme model</p>
+<dl class="py method">
+<dt id="transformer.Transformer.build_graph">
+<code class="sig-name descname">build_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">'transformer'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#transformer.Transformer.build_graph" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>学習/推論のためのグラフを構築</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="transformer.Transformer.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">encoder_input</span></em>, <em class="sig-param"><span class="n">decoder_input</span></em>, <em class="sig-param"><span class="n">training</span></em><span class="sig-paren">)</span><a class="headerlink" href="#transformer.Transformer.call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Calls the model on new inputs.</p>
+<p>In this case <cite>call</cite> just reapplies
+all ops in the graph to the new inputs
+(e.g. build a new computational graph from the provided inputs).</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> -- A tensor or list of tensors.</p></li>
+<li><p><strong>training</strong> -- Boolean or boolean scalar tensor, indicating whether to run
+the <cite>Network</cite> in training mode or inference mode.</p></li>
+<li><p><strong>mask</strong> -- A mask or list of masks. A mask can be
+either a tensor or None (no mask).</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>A tensor if there is a single output, or
+a list of tensors if there are more than one outputs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<span id="document-metrics"></span><div class="section" id="module-metrics">
+<span id="metrics-module"></span><h2><span class="section-number">5. </span>metrics module<a class="headerlink" href="#module-metrics" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="py function">
+<dt id="metrics.padded_accuracy">
+<code class="sig-prename descclassname">metrics.</code><code class="sig-name descname">padded_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logits</span></em>, <em class="sig-param"><span class="n">labels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.padded_accuracy" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Percentage of times that predictions matches labels on non-0s.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="metrics.padded_cross_entropy_loss">
+<code class="sig-prename descclassname">metrics.</code><code class="sig-name descname">padded_cross_entropy_loss</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logits</span></em>, <em class="sig-param"><span class="n">labels</span></em>, <em class="sig-param"><span class="n">smoothing</span></em>, <em class="sig-param"><span class="n">vocab_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.padded_cross_entropy_loss" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Calculate cross entropy loss while ignoring padding.
+:param logits: Tensor of size [batch_size, length_logits, vocab_size]
+:param labels: Tensor of size [batch_size, length_labels]
+:param smoothing: Label smoothing constant, used to determine the on and off values
+:param vocab_size: int size of the vocabulary</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>float32 tensors with</dt><dd><p>shape [batch_size, max(length_logits, length_labels)]</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>Returns the cross entropy loss and weight tensors</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

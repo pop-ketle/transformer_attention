@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pythonモジュール索引 &mdash; transformer_attention 1.0.0 ドキュメント</title>
+  <title>5. metrics module &mdash; transformer_attention 1.0.0 ドキュメント</title>
   
 
   
@@ -37,13 +37,7 @@
     
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
- 
-
-    <script>
-      DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true;
-    </script>
-
-
+    <link rel="prev" title="4. transformer module" href="transformer.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -89,12 +83,12 @@
             
             
               <p class="caption"><span class="caption-text">OverView:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="attention.html">1. attention module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="common_layer.html">2. common_layer module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="embedding.html">3. embedding module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transformer.html">4. transformer module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">5. metrics module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. metrics module</a></li>
 </ul>
 
             
@@ -141,10 +135,14 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Pythonモジュール索引</li>
+      <li><span class="section-number">5. </span>metrics module</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/metrics.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -156,65 +154,50 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
+  <div class="section" id="module-metrics">
+<span id="metrics-module"></span><h1><span class="section-number">5. </span>metrics module<a class="headerlink" href="#module-metrics" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="py function">
+<dt id="metrics.padded_accuracy">
+<code class="sig-prename descclassname">metrics.</code><code class="sig-name descname">padded_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logits</span></em>, <em class="sig-param"><span class="n">labels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.padded_accuracy" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Percentage of times that predictions matches labels on non-0s.</p>
+</dd></dl>
 
-   <h1>Pythonモジュール索引</h1>
+<dl class="py function">
+<dt id="metrics.padded_cross_entropy_loss">
+<code class="sig-prename descclassname">metrics.</code><code class="sig-name descname">padded_cross_entropy_loss</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logits</span></em>, <em class="sig-param"><span class="n">labels</span></em>, <em class="sig-param"><span class="n">smoothing</span></em>, <em class="sig-param"><span class="n">vocab_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.padded_cross_entropy_loss" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Calculate cross entropy loss while ignoring padding.
+:param logits: Tensor of size [batch_size, length_logits, vocab_size]
+:param labels: Tensor of size [batch_size, length_labels]
+:param smoothing: Label smoothing constant, used to determine the on and off values
+:param vocab_size: int size of the vocabulary</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>float32 tensors with</dt><dd><p>shape [batch_size, max(length_logits, length_labels)]</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>Returns the cross entropy loss and weight tensors</p>
+</dd>
+</dl>
+</dd></dl>
 
-   <div class="modindex-jumpbox">
-   <a href="#cap-a"><strong>a</strong></a> | 
-   <a href="#cap-c"><strong>c</strong></a> | 
-   <a href="#cap-e"><strong>e</strong></a> | 
-   <a href="#cap-m"><strong>m</strong></a> | 
-   <a href="#cap-t"><strong>t</strong></a>
-   </div>
-
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-a"><td></td><td>
-       <strong>a</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="attention.html#module-attention"><code class="xref">attention</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-c"><td></td><td>
-       <strong>c</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="common_layer.html#module-common_layer"><code class="xref">common_layer</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-e"><td></td><td>
-       <strong>e</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="embedding.html#module-embedding"><code class="xref">embedding</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-m"><td></td><td>
-       <strong>m</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="metrics.html#module-metrics"><code class="xref">metrics</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-t"><td></td><td>
-       <strong>t</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="transformer.html#module-transformer"><code class="xref">transformer</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+</div>
 
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="transformer.html" class="btn btn-neutral float-left" title="4. transformer module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
